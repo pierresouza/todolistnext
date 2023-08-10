@@ -1,0 +1,66 @@
+.main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0px 0px 19px 1px rgba(0, 0, 0, 0.58);
+  width: 800px;
+  height: 400px;
+}
+
+.inputArea {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.inputArea input {
+  height: 30px;
+  width: 500px;
+  border: 0;
+}
+
+.inputArea button {
+  height: 30px;
+  padding: 0px 24px;
+}
+
+.listArea {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  transition: all 0.4s ease-in;
+}
+
+.listArea:hover {
+  transform: scale(1.0125);
+  box-shadow: 0px 0px 19px 1px rgba(0, 0, 0, 0.58);
+}
+
+.listArea button {
+  width: 40px;
+  height: 40px;
+}
+
+.listArea button:hover {
+  cursor: pointer;
+}
+
+.boxButtons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 16px;
+}
+
+.boxButtons button {
+  width: 40px;
+}
