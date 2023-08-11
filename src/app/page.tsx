@@ -24,43 +24,69 @@ export default function Home() {
     console.log(remove);
   }
 
-  const onSubmit = (data: any) => {
-    if (!data)
-      return api
-        .post("/tasks", data)
-        .then((response) => {
-          Swal.fire({
-            title: "Sucesso ",
-            text: "tarefca criada com sucesso",
-            icon: "success",
-            confirmButtonText: "ok",
-          });
-          console.log(response.data);
-        })
-        .catch((error) => {
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+
+      try {
+        const { data:responseFromJsonServer } = await api.post('/tasks',value)
+        Swal.fire({
+          title: "Sucesso ",
+          text: "tarefca criada com sucesso",
+          icon: "success",
+          confirmButtonText: "ok",
+        });
+        console.log(responseFromJsonServer)
+      } catch (error) {
           Swal.fire({
             title: "Erro ",
             text: "Erro ao criar tarefa",
             icon: "error",
             confirmButtonText: "ok",
           });
-          console.log(error);
-        });
+        console.log(error)
+      }
+      if (!!value) {
+        setTodos([...todos, value]);
+        setValue("");
+      }
+      setTodos([...todos, value]);
+
+    // if (!data)
+      // return api
+      //   .post("/tasks", data)
+      //   .then((response) => {
+      //     Swal.fire({
+      //       title: "Sucesso ",
+      //       text: "tarefca criada com sucesso",
+      //       icon: "success",
+      //       confirmButtonText: "ok",
+      //     });
+      //     console.log(response.data);
+      //   })
+      //   .catch((error) => {
+      //     Swal.fire({
+      //       title: "Erro ",
+      //       text: "Erro ao criar tarefa",
+      //       icon: "error",
+      //       confirmButtonText: "ok",
+      //     });
+      //     console.log(error);
+      //   });
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.box}>
         <form
-        onClick={onSubmit}
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!!value) {
-              setTodos([...todos, value]);
-              setValue("");
-            }
-            setTodos([...todos, value]);
-          }}
+        onSubmit={(e) => handleSubmit(e)}
+          // onSubmit={(event) => {
+          //   event.preventDefault();
+          //   if (!!value) {
+          //     setTodos([...todos, value]);
+          //     setValue("");
+          //   }
+          //   setTodos([...todos, value]);
+          // }}
         >
           <div className={styles.inputArea}>
             <button type="submit">
