@@ -4,8 +4,7 @@ import styles from "./page.module.css";
 import { useState } from "react";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { IoIosAddCircle } from "react-icons/io";
-import { api } from "../services";
-import Swal from "sweetalert2";
+import { RemoteService } from "../service/RemoteService";
 
 export default function Home() {
   const [checked, setChecked] = useState(false);
@@ -24,75 +23,30 @@ export default function Home() {
     console.log(remove);
   }
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-      try {
-        const { data:responseFromJsonServer } = await api.post('/tasks',value)
-        Swal.fire({
-          title: "Sucesso ",
-          text: "tarefca criada com sucesso",
-          icon: "success",
-          confirmButtonText: "ok",
-        });
-        console.log(responseFromJsonServer)
-      } catch (error) {
-          Swal.fire({
-            title: "Erro ",
-            text: "Erro ao criar tarefa",
-            icon: "error",
-            confirmButtonText: "ok",
-          });
-        console.log(error)
-      }
-      if (!!value) {
-        setTodos([...todos, value]);
-        setValue("");
-      }
+    if (!!value) {
       setTodos([...todos, value]);
-
-    // if (!data)
-      // return api
-      //   .post("/tasks", data)
-      //   .then((response) => {
-      //     Swal.fire({
-      //       title: "Sucesso ",
-      //       text: "tarefca criada com sucesso",
-      //       icon: "success",
-      //       confirmButtonText: "ok",
-      //     });
-      //     console.log(response.data);
-      //   })
-      //   .catch((error) => {
-      //     Swal.fire({
-      //       title: "Erro ",
-      //       text: "Erro ao criar tarefa",
-      //       icon: "error",
-      //       confirmButtonText: "ok",
-      //     });
-      //     console.log(error);
-      //   });
+      setValue("");
+    }
+    setTodos([...todos, value]);
   };
 
   return (
     <div className={styles.main}>
       <div className={styles.box}>
-        <form
-        onSubmit={(e) => handleSubmit(e)}
-          // onSubmit={(event) => {
-          //   event.preventDefault();
-          //   if (!!value) {
-          //     setTodos([...todos, value]);
-          //     setValue("");
-          //   }
-          //   setTodos([...todos, value]);
-          // }}
-        >
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className={styles.inputArea}>
             <button type="submit">
               <IoIosAddCircle size={24} color={"blue"} />
             </button>
-            <input type="text" placeholder="Crie uma tarefa" value={value} onChange={(event) => setValue(event.target.value)} required />
+            <input
+              type="text"
+              placeholder="Crie uma tarefa"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+              required
+            />
             <select name="" id="">
               <option value="In Progress">In Progress</option>
               <option value="Completed">Completed</option>
@@ -104,9 +58,18 @@ export default function Home() {
               return (
                 <li key={index} className={styles.listArea}>
                   <div className={styles.boxButtons}>
-                    <input type="checkbox" checked={checked} onChange={handleChecked} />
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={handleChecked}
+                    />
                     {todos}
-                    <button className={styles.btnRemove} title="deletar tarefa" value={removed} onClick={handleRemove}>
+                    <button
+                      className={styles.btnRemove}
+                      title="deletar tarefa"
+                      value={removed}
+                      onClick={handleRemove}
+                    >
                       <IoIosRemoveCircleOutline size={24} color={"red"} />
                     </button>
                   </div>
